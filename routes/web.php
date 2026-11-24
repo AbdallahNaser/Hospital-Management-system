@@ -148,12 +148,20 @@ Route::post(
     [AppointmentController::class, 'createGoogleEventForDoctor']
 )->name('createGoogleEventForDoctor');
 
+Route::get('/', function () {
+    return (!Auth::check()) ? Redirect::route('login') : Redirect::to(getDashboardURL());
+});
+
+Route::get('/admin', function () {
+    return (!Auth::check()) ? Redirect::route('login') : Redirect::to(getDashboardURL());
+});
+
 Route::get('/login', function () {
     return (!Auth::check()) ? view('auth.login') : Redirect::to(getDashboardURL());
 })->name('login');
 
 Route::middleware('setLanguage')->group(function () {
-    Route::get('/', [FrontController::class, 'medical'])->name('medical');
+    Route::get('/home', [FrontController::class, 'medical'])->name('medical');
     Route::get('/medical-about-us', [FrontController::class, 'medicalAboutUs'])->name('medicalAboutUs');
     Route::get('/medical-services', [FrontController::class, 'medicalServices'])->name('medicalServices');
     Route::get('/medical-appointment', [FrontController::class, 'medicalAppointment'])->name('medicalAppointment');

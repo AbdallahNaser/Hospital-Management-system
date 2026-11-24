@@ -1,0 +1,1533 @@
+{
+  "info": {
+    "_postman_id": "6a0273e2-foundation-api-collection-v1",
+    "name": "Foundation Medical API",
+    "description": "Postman API collection for the Foundation Clinic/Hospital Management System (Laravel Passport).\n\n### Quick Start\n1. Set the `base_url` collection variable (default: `http://localhost:8000`, or `http://localhost/foundation/public` if using XAMPP directly).\n2. Run any **Register** or **Login** request — the Bearer `token` is automatically saved to the `{{token}}` collection variable.\n3. All requests include `Accept: application/json` (required by the backend to return JSON responses).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "doctor_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "patient_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "service_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "specialization_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "appointment_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "doctor_day_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "prescription_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "file_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "slot_date",
+      "value": "25-11",
+      "type": "string"
+    },
+    {
+      "key": "appointment_date",
+      "value": "2026-11-25",
+      "type": "string"
+    },
+    {
+      "key": "search_query",
+      "value": "Adam",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication",
+      "description": "Patient and Doctor registration, login, and logout endpoints. Successful register/login automatically saves the Passport access token into `{{token}}`.",
+      "item": [
+        {
+          "name": "Register Patient",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const res = pm.response.json();",
+                  "    if (res.token) {",
+                  "        pm.collectionVariables.set('token', res.token);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "first_name",
+                  "value": "Ahmed",
+                  "description": "Required",
+                  "type": "text"
+                },
+                {
+                  "key": "last_name",
+                  "value": "Hassan",
+                  "description": "Optional",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "patient.test@example.com",
+                  "description": "Required, unique email",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "12345678",
+                  "description": "Required, min 6 chars",
+                  "type": "text"
+                },
+                {
+                  "key": "password_confirmation",
+                  "value": "12345678",
+                  "description": "Required, must match password",
+                  "type": "text"
+                },
+                {
+                  "key": "contact",
+                  "value": "01012345678",
+                  "description": "Optional, unique",
+                  "type": "text"
+                },
+                {
+                  "key": "gender",
+                  "value": "1",
+                  "description": "1 = Male, 2 = Female",
+                  "type": "text"
+                },
+                {
+                  "key": "dob",
+                  "value": "1998-05-15",
+                  "description": "Optional (YYYY-MM-DD)",
+                  "type": "text"
+                },
+                {
+                  "key": "countryid",
+                  "value": "Egypt",
+                  "description": "Optional",
+                  "type": "text"
+                },
+                {
+                  "key": "stateid",
+                  "value": "Cairo",
+                  "description": "Optional",
+                  "type": "text"
+                },
+                {
+                  "key": "profile",
+                  "description": "Optional image (jpeg, jpg, png, max 2MB)",
+                  "type": "file",
+                  "src": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/registerpatient",
+              "host": ["{{base_url}}"],
+              "path": ["api", "registerpatient"]
+            },
+            "description": "Registers a new patient account and returns a Passport Bearer token."
+          }
+        },
+        {
+          "name": "Login Patient",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const res = pm.response.json();",
+                  "    if (res.token) {",
+                  "        pm.collectionVariables.set('token', res.token);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"patient@infycare.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loginpatient",
+              "host": ["{{base_url}}"],
+              "path": ["api", "loginpatient"]
+            },
+            "description": "Logs in a patient and returns a Passport Bearer token (auto-saved to `{{token}}`)."
+          }
+        },
+        {
+          "name": "Register Doctor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const res = pm.response.json();",
+                  "    if (res.token) {",
+                  "        pm.collectionVariables.set('token', res.token);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "first_name",
+                  "value": "Dr. Sara",
+                  "description": "Required",
+                  "type": "text"
+                },
+                {
+                  "key": "last_name",
+                  "value": "Ali",
+                  "description": "Optional",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "doctor.test@example.com",
+                  "description": "Required, unique email",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "12345678",
+                  "description": "Required, min 6 chars",
+                  "type": "text"
+                },
+                {
+                  "key": "password_confirmation",
+                  "value": "12345678",
+                  "description": "Required, must match password",
+                  "type": "text"
+                },
+                {
+                  "key": "specializations[]",
+                  "value": "1",
+                  "description": "Required, specialization ID(s)",
+                  "type": "text"
+                },
+                {
+                  "key": "gender",
+                  "value": "2",
+                  "description": "Required: 1 = Male, 2 = Female",
+                  "type": "text"
+                },
+                {
+                  "key": "countryid",
+                  "value": "Egypt",
+                  "description": "Required",
+                  "type": "text"
+                },
+                {
+                  "key": "stateid",
+                  "value": "Cairo",
+                  "description": "Required",
+                  "type": "text"
+                },
+                {
+                  "key": "contact",
+                  "value": "01098765432",
+                  "description": "Optional, unique",
+                  "type": "text"
+                },
+                {
+                  "key": "dob",
+                  "value": "1990-03-10",
+                  "description": "Optional (YYYY-MM-DD)",
+                  "type": "text"
+                },
+                {
+                  "key": "experience",
+                  "value": "5",
+                  "description": "Optional, numeric years",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Senior Specialist",
+                  "description": "Optional",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Experienced medical specialist.",
+                  "description": "Optional",
+                  "type": "text"
+                },
+                {
+                  "key": "profile",
+                  "description": "Optional image (jpeg, jpg, png, max 2MB)",
+                  "type": "file",
+                  "src": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/registerdoctor",
+              "host": ["{{base_url}}"],
+              "path": ["api", "registerdoctor"]
+            },
+            "description": "Registers a new doctor account and returns a Passport Bearer token. Note: omit `status` so the account is created active."
+          }
+        },
+        {
+          "name": "Login Doctor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const res = pm.response.json();",
+                  "    if (res.token) {",
+                  "        pm.collectionVariables.set('token', res.token);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"doctor@infycare.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/logindoctor",
+              "host": ["{{base_url}}"],
+              "path": ["api", "logindoctor"]
+            },
+            "description": "Logs in a doctor (or admin) and returns a Passport Bearer token (auto-saved to `{{token}}`)."
+          }
+        },
+        {
+          "name": "Logout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    pm.collectionVariables.set('token', '');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/logout",
+              "host": ["{{base_url}}"],
+              "path": ["api", "logout"]
+            },
+            "description": "Revokes the current user's Passport access token."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Profile & Account Info",
+      "description": "Fetch authenticated user info, edit/update profile details, and change password.",
+      "item": [
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/user",
+              "host": ["{{base_url}}"],
+              "path": ["api", "user"]
+            },
+            "description": "Returns the currently authenticated user object."
+          }
+        },
+        {
+          "name": "Get Profile Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/profile/edit",
+              "host": ["{{base_url}}"],
+              "path": ["api", "profile", "edit"]
+            },
+            "description": "Retrieves the current user's profile data."
+          }
+        },
+        {
+          "name": "Update Profile Info",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "first_name",
+                  "value": "Ahmed Updated",
+                  "description": "Optional",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "patient.test@example.com",
+                  "description": "Optional, unique",
+                  "type": "text"
+                },
+                {
+                  "key": "contact",
+                  "value": "01012345678",
+                  "description": "Optional",
+                  "type": "text"
+                },
+                {
+                  "key": "dob",
+                  "value": "1998-05-15",
+                  "description": "Optional (YYYY-MM-DD)",
+                  "type": "text"
+                },
+                {
+                  "key": "gender",
+                  "value": "1",
+                  "description": "Optional: 1 = Male, 2 = Female",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Medical Consultant",
+                  "description": "Optional",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Updated profile bio/description.",
+                  "description": "Optional",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "description": "Optional avatar image (jpeg, jpg, png, max 2MB)",
+                  "type": "file",
+                  "src": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/profile/update",
+              "host": ["{{base_url}}"],
+              "path": ["api", "profile", "update"]
+            },
+            "description": "Updates the authenticated user's profile info (and optional profile image)."
+          }
+        },
+        {
+          "name": "Update Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"newpassword123\",\n  \"password_confirmation\": \"newpassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/update-password",
+              "host": ["{{base_url}}"],
+              "path": ["api", "update-password"]
+            },
+            "description": "Updates the authenticated user's password (minimum 8 characters, confirmed)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Doctors & Search (Basics)",
+      "description": "Browse doctors, view details, search, filter by specialization or service, and check available time slots.",
+      "item": [
+        {
+          "name": "List All Doctors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctorspatient",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctorspatient"]
+            }
+          }
+        },
+        {
+          "name": "Get Doctor Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctorpatientdetails/{{doctor_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctorpatientdetails", "{{doctor_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Search Doctors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/searchdoctor/{{search_query}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "searchdoctor", "{{search_query}}"]
+            },
+            "description": "Searches doctors by first_name, title, or description."
+          }
+        },
+        {
+          "name": "Filter Doctors by Specialization",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/specializationfilter/{{specialization_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "specializationfilter", "{{specialization_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Filter Doctors by Activated Service",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/activated-service/{{service_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "activated-service", "{{service_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Doctor Available Time Slots",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/generatedoctortimedays/{{doctor_id}}/{{slot_date}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "generatedoctortimedays", "{{doctor_id}}", "{{slot_date}}"]
+            },
+            "description": "Generates available time slots for a doctor on a given date (`slot_date` format: `d-m`, e.g., `25-11`)."
+          }
+        },
+        {
+          "name": "Monthly Appointments Analysis",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/monthsanalysis",
+              "host": ["{{base_url}}"],
+              "path": ["api", "monthsanalysis"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Patient Endpoints",
+      "description": "Endpoints restricted to authenticated users with the `patient` role.",
+      "item": [
+        {
+          "name": "Book Appointment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doctor_id\": 1,\n  \"patient_id\": 1,\n  \"service_id\": 1,\n  \"date\": \"2026-11-25\",\n  \"from_time\": \"09:00\",\n  \"from_time_type\": \"AM\",\n  \"to_time\": \"09:30\",\n  \"to_time_type\": \"AM\",\n  \"payable_amount\": 150,\n  \"description\": \"General checkup\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/patients/appointments",
+              "host": ["{{base_url}}"],
+              "path": ["api", "patients", "appointments"]
+            }
+          }
+        },
+        {
+          "name": "Get Appointment Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/patients/appointments/{{appointment_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "patients", "appointments", "{{appointment_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get All Patient Appointments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/patients/{{patient_id}}/allappointments",
+              "host": ["{{base_url}}"],
+              "path": ["api", "patients", "{{patient_id}}", "allappointments"]
+            }
+          }
+        },
+        {
+          "name": "Get Today Appointments (Patient)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/patients/getTodayAppointmentsForPatient",
+              "host": ["{{base_url}}"],
+              "path": ["api", "patients", "getTodayAppointmentsForPatient"]
+            }
+          }
+        },
+        {
+          "name": "Get Upcoming Appointments (Patient)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/patients/getAllComingAppointmentsForPatient",
+              "host": ["{{base_url}}"],
+              "path": ["api", "patients", "getAllComingAppointmentsForPatient"]
+            }
+          }
+        },
+        {
+          "name": "Get Passed Appointments (Patient)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/patients/getAllPassedAppointmentsForPatient",
+              "host": ["{{base_url}}"],
+              "path": ["api", "patients", "getAllPassedAppointmentsForPatient"]
+            }
+          }
+        },
+        {
+          "name": "Cancel Appointment (Patient)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appointmentId\": \"{{appointment_id}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/patients/appointment-cancel/{{appointment_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "patients", "appointment-cancel", "{{appointment_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Appointment (Patient)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/patients/appointments/{{appointment_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "patients", "appointments", "{{appointment_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get All Transactions / Bills (Patient)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/patients/alltransactions",
+              "host": ["{{base_url}}"],
+              "path": ["api", "patients", "alltransactions"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Doctor Endpoints",
+      "description": "Endpoints for authenticated users with the `doctor` role (services, schedules, appointments, billing, and stats).",
+      "item": [
+        {
+          "name": "Get Doctor Services",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/{{doctor_id}}/edit-services",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "{{doctor_id}}", "edit-services"]
+            }
+          }
+        },
+        {
+          "name": "Update Doctor Services",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"services\": {\n    \"1\": {\n      \"activated\": true,\n      \"price\": 200\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/doctors/{{doctor_id}}/update-services",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "{{doctor_id}}", "update-services"]
+            }
+          }
+        },
+        {
+          "name": "List Doctor Schedule Days",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-day",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctor-day"]
+            }
+          }
+        },
+        {
+          "name": "Create Doctor Schedule Day",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"day_id\": 1,\n  \"duration\": 30,\n  \"start_time_am\": \"09:00:00\",\n  \"end_time_am\": \"12:00:00\",\n  \"start_time_pm\": \"14:00:00\",\n  \"end_time_pm\": \"18:00:00\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/doctor-day",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctor-day"]
+            }
+          }
+        },
+        {
+          "name": "Update Doctor Schedule Day",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"day_id\": 1,\n  \"duration\": 30,\n  \"start_time_am\": \"10:00:00\",\n  \"end_time_am\": \"13:00:00\",\n  \"start_time_pm\": \"15:00:00\",\n  \"end_time_pm\": \"19:00:00\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/doctor-day/{{doctor_day_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctor-day", "{{doctor_day_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Doctor Schedule Day",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctor-day/{{doctor_day_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctor-day", "{{doctor_day_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get All Appointments (Doctor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/{{doctor_id}}/allappointments",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "{{doctor_id}}", "allappointments"]
+            }
+          }
+        },
+        {
+          "name": "Get Today Appointments (Doctor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/getTodayAppointmentsForDoctor",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "getTodayAppointmentsForDoctor"]
+            }
+          }
+        },
+        {
+          "name": "Get Upcoming Appointments (Doctor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/getAllComingAppointmentsForDoctor",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "getAllComingAppointmentsForDoctor"]
+            }
+          }
+        },
+        {
+          "name": "Get Passed Appointments (Doctor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/getAllPassedAppointmentsForDoctor",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "getAllPassedAppointmentsForDoctor"]
+            }
+          }
+        },
+        {
+          "name": "Get Appointments by Date (Doctor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/dateappointments/{{appointment_date}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "dateappointments", "{{appointment_date}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Appointment Details (Doctor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/appointments/{{appointment_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "appointments", "{{appointment_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Appointment Invitation Link",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appointment_id\": 1,\n  \"invitation_link\": \"https://meet.google.com/abc-defg-hij\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/doctors/updateInvitationLink",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "updateInvitationLink"]
+            }
+          }
+        },
+        {
+          "name": "Update Appointment Payment Status",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/updatepaymentstatus/2/{{appointment_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "updatepaymentstatus", "2", "{{appointment_id}}"]
+            },
+            "description": "Status values: `1` = Pending, `2` = Paid."
+          }
+        },
+        {
+          "name": "Cancel Appointment (Doctor)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/appointment-cancel/{{appointment_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "appointment-cancel", "{{appointment_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get All Transactions / Bills (Doctor)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/alltransactions",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "alltransactions"]
+            }
+          }
+        },
+        {
+          "name": "Doctor Appointments Count (Total)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/appointmentscount",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "appointmentscount"]
+            }
+          }
+        },
+        {
+          "name": "Doctor Revenue Sum (Total)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/summationpayable",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "summationpayable"]
+            }
+          }
+        },
+        {
+          "name": "Doctor Appointments Count (Monthly)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/countAppointmentsDoctorMonthly",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "countAppointmentsDoctorMonthly"]
+            }
+          }
+        },
+        {
+          "name": "Doctor Revenue Sum (Monthly)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/sumPayableAmountsDoctorMonthly",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "sumPayableAmountsDoctorMonthly"]
+            }
+          }
+        },
+        {
+          "name": "Doctor Monthly Analysis",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/doctors/doctormonthsanalysis",
+              "host": ["{{base_url}}"],
+              "path": ["api", "doctors", "doctormonthsanalysis"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Prescriptions & Appointment Files",
+      "description": "Manage prescriptions and upload/view medical files attached to appointments.",
+      "item": [
+        {
+          "name": "Create Prescription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appointment_id\": 1,\n  \"drug_name\": \"Panadol 500mg\",\n  \"period\": \"5 days\",\n  \"times\": 3,\n  \"notes\": \"Take after meals\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/newpres/store",
+              "host": ["{{base_url}}"],
+              "path": ["api", "newpres", "store"]
+            }
+          }
+        },
+        {
+          "name": "Get Prescriptions by Appointment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/newpres/show/{{appointment_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "newpres", "show", "{{appointment_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Drugs for Appointment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/getDrugsForAppointment/{{appointment_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "getDrugsForAppointment", "{{appointment_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Prescription",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appointment_id\": 1,\n  \"drug_name\": \"Panadol Extra\",\n  \"period\": \"7 days\",\n  \"times\": 2,\n  \"notes\": \"Updated dosage\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/newpres/edit/{{prescription_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "newpres", "edit", "{{prescription_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Prescription",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/pres/delete/{{prescription_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "pres", "delete", "{{prescription_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Upload Appointment File",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "appointment_id",
+                  "value": "{{appointment_id}}",
+                  "type": "text"
+                },
+                {
+                  "key": "patientfile",
+                  "description": "File up to 2MB",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/upload",
+              "host": ["{{base_url}}"],
+              "path": ["api", "upload"]
+            }
+          }
+        },
+        {
+          "name": "List Appointment Files",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/appointmentfiles/{{appointment_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "appointmentfiles", "{{appointment_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Download Appointment File Info",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/download/{{appointment_id}}/{{file_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "download", "{{appointment_id}}", "{{file_id}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

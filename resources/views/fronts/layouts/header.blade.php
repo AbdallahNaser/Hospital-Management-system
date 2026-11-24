@@ -16,7 +16,7 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                         <ul class="navbar-nav align-items-center py-2 py-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link {{ Request::is('/*') ? 'active' : '' }}" aria-current="page" href="{{ url('/') }}">{{ __('messages.web.home') }}</a>
+                                <a class="nav-link {{ Request::is('home') ? 'active' : '' }}" aria-current="page" href="{{ route('medical') }}">{{ __('messages.web.home') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ Request::is('medical-doctors*') ? 'active' : '' }}"

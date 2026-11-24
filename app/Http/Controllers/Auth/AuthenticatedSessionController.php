@@ -70,6 +70,6 @@ class AuthenticatedSessionController extends Controller
         
       
 
-        return redirect('/');
+        return redirect()->route('login');
     }
 }
